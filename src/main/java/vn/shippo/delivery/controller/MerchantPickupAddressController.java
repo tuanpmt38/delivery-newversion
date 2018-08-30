@@ -52,6 +52,7 @@ public class MerchantPickupAddressController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("total", merchantPickupAddress.size());
         map.put("addresses", merchantPickupAddress);
+
         return ResponseEntity.ok(map);
     }
 

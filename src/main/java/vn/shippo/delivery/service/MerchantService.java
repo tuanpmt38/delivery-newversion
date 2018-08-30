@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MerchantService {
-    void save(Merchant merchant);
+
+    Merchant save(Merchant merchant);
 
     Optional<Merchant> findById(Integer id);
 
