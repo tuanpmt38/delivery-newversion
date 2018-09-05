@@ -2,9 +2,7 @@ package vn.shippo.delivery.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,27 +11,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 
-public class DemoAuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LogManager.getLogger(DemoAuthenticationFilter.class);
+    private static final Logger logger = LogManager.getLogger(AuthenticationFilter.class);
 
     private static final String HEADER_TOKEN = "Authorization";
 
     private static final String OAUTH_SERVICE_URL = "http://192.168.2.253/oauthservice/me";
 
     private static final String REQUEST_ATTR_DO_NOT_CONTINUE = "MyAuthenticationFilter-doNotContinue";
-
-//    private UserService userService;
-//
-//    @Autowired
-//    public DemoAuthenticationFilter( UserService userService){
-//
-//        this.userService = userService;
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

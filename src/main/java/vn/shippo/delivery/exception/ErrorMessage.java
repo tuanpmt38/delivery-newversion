@@ -1,4 +1,4 @@
-package vn.shippo.delivery.Exception;
+package vn.shippo.delivery.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -5,16 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import vn.shippo.delivery.model.Merchant;
 import vn.shippo.delivery.service.MerchantService;
 
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class MerchantController {
 
     private static final Logger logger = LogManager.getLogger(MerchantController.class);
@@ -26,7 +24,7 @@ public class MerchantController {
         this.merchantService = merchantService;
     }
 
-    @RequestMapping(value = "/merchant", method = RequestMethod.GET)
+    @RequestMapping(value = "/merchants", method = RequestMethod.GET)
     public ResponseEntity<List<Merchant>> getAllMerchant(){
         List<Merchant> merchants = merchantService.findAll();
         logger.info("Get all merchant ");
@@ -49,6 +47,7 @@ public class MerchantController {
         currentMerchant.get().setBirthday(merchant.getBirthday());
         currentMerchant.get().setGender(merchant.getGender());
         currentMerchant.get().setMobile(merchant.getMobile());
+//        currentMerchant.get().setBanks(merchant.getBanks());
         merchantService.save(currentMerchant.get());
         logger.info("Result edit current merchant: " +currentMerchant+ " done");
         return new ResponseEntity<Merchant>(currentMerchant.get(), HttpStatus.OK);

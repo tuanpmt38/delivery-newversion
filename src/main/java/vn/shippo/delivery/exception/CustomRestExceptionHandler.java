@@ -1,7 +1,6 @@
-package vn.shippo.delivery.Exception;
+package vn.shippo.delivery.exception;
 
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -122,6 +121,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(errorMessage, new HttpHeaders(), errorMessage.getStatus());
     }
 
+    //500
 
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> handleNotFoundException(final Exception ex, final WebRequest request) {

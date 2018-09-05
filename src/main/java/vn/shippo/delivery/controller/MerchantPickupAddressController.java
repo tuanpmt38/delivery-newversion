@@ -4,6 +4,10 @@ package vn.shippo.delivery.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
 @RestController
 public class MerchantPickupAddressController {
 
@@ -30,31 +36,31 @@ public class MerchantPickupAddressController {
         this.merchantPickupAddressService = merchantPickupAddressService;
     }
 
-//    @RequestMapping(value = "/pickup_address", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<PagedResources<MerchantPickupAddress>> getMerchantPickupAddress(Pageable pageable, PagedResourcesAssembler assembler) {
-//
-//        Page<MerchantPickupAddress> merchantPickupAddressPage = merchantPickupAddressService.findAll(pageable);
-//        logger.info("Page Merchant pickup address: " + merchantPickupAddressPage);
-//        PagedResources < MerchantPickupAddress > pickupAddressPagedResources = assembler.toResource(merchantPickupAddressPage,
-//                linkTo(MerchantPickupAddressController.class).slash("/pickup_address").withSelfRel());
-//
-//        return new ResponseEntity < > (assembler.toResource(merchantPickupAddressPage,
-//                linkTo(MerchantPickupAddressController.class).slash("/pickup_address").withSelfRel()), HttpStatus.OK);
-//
-////        return new ResponseEntity<>(merchantPickupAddressPage, HttpStatus.OK);
-//    }
-
     @RequestMapping(value = "/pickup_address", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, Object>> getAllMerchantPickupAddress(){
+    public ResponseEntity<PagedResources<MerchantPickupAddress>> getMerchantPickupAddress(Pageable pageable, PagedResourcesAssembler assembler) {
 
-        List<MerchantPickupAddress> merchantPickupAddress = merchantPickupAddressService.findAll();
-        logger.info("Get all merchant pickup address "+merchantPickupAddress);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("total", merchantPickupAddress.size());
-        map.put("addresses", merchantPickupAddress);
+        Page<MerchantPickupAddress> merchantPickupAddressPage = merchantPickupAddressService.findAll(pageable);
+        logger.info("Page Merchant pickup address: " + merchantPickupAddressPage);
+        PagedResources < MerchantPickupAddress > pickupAddressPagedResources = assembler.toResource(merchantPickupAddressPage,
+                linkTo(MerchantPickupAddressController.class).slash("/pickup_address").withSelfRel());
 
-        return ResponseEntity.ok(map);
+        return new ResponseEntity < > (assembler.toResource(merchantPickupAddressPage,
+                linkTo(MerchantPickupAddressController.class).slash("/pickup_address").withSelfRel()), HttpStatus.OK);
+
+//        return new ResponseEntity<>(merchantPickupAddressPage, HttpStatus.OK);
     }
+
+//    @RequestMapping(value = "/pickup_address", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Map<String, Object>> getAllMerchantPickupAddress(){
+//
+//        List<MerchantPickupAddress> merchantPickupAddress = merchantPickupAddressService.findAll();
+//        logger.info("Get all merchant pickup address "+merchantPickupAddress);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("total", merchantPickupAddress.size());
+//        map.put("addresses", merchantPickupAddress);
+//
+//        return ResponseEntity.ok(map);
+//    }
 
     @RequestMapping(value = "/pickup_address/{id}", method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity<MerchantPickupAddress> getMerchantPickupAddressById(@PathVariable("id") Integer id)  {
