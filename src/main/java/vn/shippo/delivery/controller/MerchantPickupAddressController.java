@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import vn.shippo.delivery.filter.AuthenticationFilter;
 import vn.shippo.delivery.model.MerchantPickupAddress;
 import vn.shippo.delivery.service.MerchantPickupAddressService;
 
@@ -30,6 +31,9 @@ public class MerchantPickupAddressController {
     private static final Logger logger = LogManager.getLogger(MerchantPickupAddressController.class);
 
     private MerchantPickupAddressService merchantPickupAddressService;
+
+    @Autowired
+    private AuthenticationFilter authenticationFilter;
 
     @Autowired
     public MerchantPickupAddressController(MerchantPickupAddressService merchantPickupAddressService){
